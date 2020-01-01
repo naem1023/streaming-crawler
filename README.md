@@ -1,4 +1,5 @@
-# streaming-crawler 
+streaming-crawler 
+=============
 Download video from &v&le
 
 * using python 3
@@ -9,8 +10,7 @@ Download video from &v&le
 ![Alt text](/dog.jpg)
 
 
-## must install dependecy package 
-
+### must install dependecy package 
 
 * * *
 
@@ -20,6 +20,8 @@ Download video from &v&le
 4. save txt file in same directory with 'down.py'
 5. write video name in a line(don't press enter) at 'name.txt'
 5. execute 'down.py'
+
+* * *
 
 1. 'browser_console.txt' 내용을 복사
 2. 웹 사이트에서 콘솔 열기
