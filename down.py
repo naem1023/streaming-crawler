@@ -3,6 +3,7 @@ import urllib.request as request
 import os
 import traceback
 from selenium import webdriver
+import shutil
 
 def createFolder(directory):
     try:
@@ -123,6 +124,9 @@ def downloadTsList():
 	driver.get(url)
 	driver.execute_script(js_string)
 
+def deleteFolder(videoName):
+	shutil.rmtree(videoName)
+
 def main():
 	#try:
 		urlList = readUrlTxt()
@@ -137,6 +141,7 @@ def main():
 
 		mergeFile(videoName)
 
+		deleteFolder(videoName)
 	#except Exception as error:
 	#	print('-' * 20)
 	#	traceback.print_exc()
