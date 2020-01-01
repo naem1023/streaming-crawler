@@ -29,10 +29,15 @@ def getVideoName():
 def downloadTsFile(videoName, urlList):
 	fakeReferer = 'https://avgle.com'
 
-	createFolder(videoName)
+	#createFolder(videoName)
 
 	try:
-		command = """aria2c -c -x 4 --header="Referer: """ + fakeReferer + """" -d """ + str(videoName) + " -i tslist.txt"
+		#-c : if file already exist, pass
+		#-x : how many connection to download
+		#--header : set header
+		#-d : set download directory
+		#-i : download from text file
+		command = """aria2c -c -x 6 --header="Referer: """ + fakeReferer + """" -d """ + str(videoName) + " -i tslist.txt"
 		print(command)
 		os.system(command)
 
@@ -40,6 +45,9 @@ def downloadTsFile(videoName, urlList):
 		print('-' * 20)
 		traceback.print_exc()
 
+
+	# manual download part
+	# aria2 is more fast and stable
 	'''
 	videoFolderExist = False
 	len_fileListTxt = 0
@@ -105,6 +113,7 @@ def makeTsList(videoName):
 	for file in fileList:
 		ext = os.path.splitext(file)[-1]
 		if ext == '.ts':
+			#type for aria2 using text file
 			temp = "file '" + videoName + '\\' + str(file) + "'\n"
 			fileListTxtFile.write(temp)
 
