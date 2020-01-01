@@ -9,11 +9,8 @@ Download video from &v&le
 ![Alt text](/dog.jpg)
 
 
-##install dependecy package 
-##의존 패키지 설치 방법
-<pre><code>
-pip install -r requirements.txt
-</code></pre>
+## must install dependecy package 
+
 
 * * *
 
