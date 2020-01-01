@@ -1,3 +1,7 @@
+install dependecy package 
+pip install -r requirements.txt
+
+
 1. copy & paste all contents in 'browser_console.txt'
 2. go website and open console
 3. paste & resume script execution
