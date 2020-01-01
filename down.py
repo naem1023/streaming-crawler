@@ -2,6 +2,7 @@
 import urllib.request as request
 import os
 import traceback
+from selenium import webdriver
 
 def createFolder(directory):
     try:
@@ -24,16 +25,14 @@ def getVideoName():
 	name = videoName.readline()
 	return name
 
-def downTsFile(videoName, urlList):
+def downloadTsFile(videoName, urlList):
 	fakeReferer = 'https://avgle.com'
 
-	videoFolderExist = False
-	len_fileListTxt = 0
-	fileListTxtName = os.path.join(videoName, "fileList.txt")
-
+	createFolder(videoName)
 
 	try:
 		command = """aria2c -c -x 4 --header="Referer: """ + fakeReferer + """" -d """ + str(videoName) + " -i tslist.txt"
+		print(command)
 		os.system(command)
 
 	except Exception as error:
@@ -41,6 +40,10 @@ def downTsFile(videoName, urlList):
 		traceback.print_exc()
 
 	'''
+	videoFolderExist = False
+	len_fileListTxt = 0
+	fileListTxtName = os.path.join(videoName, "fileList.txt")
+
 	#check existence of downloaded files
 	if os.path.isfile(fileListTxtName) :
 		#text file : already saved m38u file
@@ -106,13 +109,29 @@ def makeTsList(videoName):
 
 	fileListTxtFile.close()
 
+def downloadTsList():
+	js_string = """
+
+
+	"""
+	urlTxt = open("name.txt", 'r')
+	urlTxt.readline()
+	url = urlTxt.readline()
+
+	
+	driver = webdriver.Chrome('chromedriver.exe')
+	driver.get(url)
+	driver.execute_script(js_string)
+
 def main():
 	#try:
 		urlList = readUrlTxt()
 
 		videoName = getVideoName()
 
-		downTsFile(videoName, urlList)
+		#downloadTsList()
+
+		downloadTsFile(videoName, urlList)
 
 		makeTsList(videoName)
 
