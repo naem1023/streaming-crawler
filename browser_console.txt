@@ -1,0 +1,46 @@
+const BLACKLIST = [
+    "while (true) {}",
+    "debugger",
+];
+
+Function.prototype._constructor = Function.prototype.constructor;
+Function.prototype.constructor = function () {
+    if (!BLACKLIST.includes(arguments)) {
+        return Function.prototype._constructor.apply(arguments);
+    }
+};
+
+function getfile(filename, data) {
+    var blob = new Blob([data], {
+        type: 'text/plain',
+        endings: 'native'
+    });
+    if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    } else {
+        var elem = window.document.createElement('a');
+        elem.href = window.URL.createObjectURL(blob);
+        elem.download = filename;
+        document.body.appendChild(elem);
+        elem.click();
+        document.body.removeChild(elem);
+    }
+};
+
+let v = videojs('video-player');
+v.on('loadedmetadata', () => {
+    console.log('metadata loaded');
+    let arr = v.tech_.hls.playlists.media_.segments.map(x => {
+        return {
+            uri: x.resolvedUri
+        }
+    });
+    console.log('find: ', arr.length, 'uris')
+    arr.forEach(videojs.Hls.xhr.beforeRequest);
+    for (let a of arr) {
+        if (typeof a.decryptURI === 'function') {
+            a.decryptURI();
+        }
+    }
+    getfile('tslist', arr.map((a) => a.uri).join("\r\n"));
+});
